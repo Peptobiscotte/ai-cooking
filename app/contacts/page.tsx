@@ -1,5 +1,9 @@
+import TextGen from "@/components/gemini/textGen";
+
 export default function Contacts() {
     return (
-        <div>Contacts</div>
+        <div>
+            <TextGen></TextGen>
+        </div>
     )
 }
