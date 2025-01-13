@@ -55,8 +55,16 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+		backgroundImage: {
+			'crowdStr': "url('/crowdedStr.jpg')",
+			'tokyoNight': "url('/tokyoNight.jpg')",
+			'starter': "url('/starter.jpg')",
+			'main': "url('/main.jpg')",
+			'dessert': "url('/dessert.jpg')",
+		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require('tailwind-scrollbar')],
+  
 } satisfies Config;

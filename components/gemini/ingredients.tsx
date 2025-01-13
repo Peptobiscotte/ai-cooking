@@ -2,10 +2,12 @@
 
 import Image from "next/image"
 
-// import { useState } from "react"
+type IngredientsProps = {
+    ingredients: string[];
+    setIngredients: React.Dispatch<React.SetStateAction<string[]>>;
+  };
 
-export default function Ingredients() {
-    const ingredientsArr = ['carrot', 'brocoli', 'beef'] // turn this into state
+export default function Ingredients({ingredients, setIngredients}: IngredientsProps) {
     
     const submit = function(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
@@ -14,30 +16,29 @@ export default function Ingredients() {
         const formData = new FormData(e.currentTarget)
         const ing = formData.get('ing') as string
 
-        if(ing.trim() === '' || !regex.test(ing)) {
-            return
-        }
-
         const lowerIng = ing.trim().toLowerCase()
         const cleanIng = lowerIng.charAt(0).toUpperCase() + lowerIng.slice(1)
 
-        ingredientsArr.push(cleanIng)
-        console.log(ingredientsArr)
+        if(ing.trim() === '' || !regex.test(ing) || ingredients.includes(cleanIng)) {
+            return
+        }
+    
+
+        setIngredients((prevState) => [...prevState, cleanIng])
     }
 
     const removeIng = function(e: React.MouseEvent<HTMLImageElement>) {
         const selectedIng = e.currentTarget.previousElementSibling?.id
-        const updatedArr = ingredientsArr.filter(item => item !== selectedIng)
-        console.log(updatedArr)
+        setIngredients((prevState) => [...prevState.filter(item => item !== selectedIng)])
     }
 
     return (
-        <div className="flex flex-col items-center justify-center pt-8 gap-4">
+        <div className="flex flex-col items-center justify-center pt-8 gap-8">
             <div className="flex gap-2">
-                {ingredientsArr.map(ing => 
+                {ingredients.map(ing => 
                     <div key={ing} className="flex gap-2 border-2 rounded-md py-1 px-1">
                         <p id={ing}>{ing}</p>
-                        <Image onClick={removeIng} alt="cross" src='/cross.svg' width={20} height={20}></Image>
+                        <Image onClick={removeIng} alt="cross" src='/cross.svg' width={20} height={20} className="cursor-pointer"></Image>
                     </div>
                 )}
             </div>
